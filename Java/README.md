@@ -1,5 +1,21 @@
 #  ❄ idgenerator-Java
 
+## bccyben fork変更箇所
+IdGeneratorOptions.java
+```java
+    /**
+     * IDはより短く生成することが可能ただしシステムスループットが低下する
+     * 1000で設定する場合0.1sとなる
+     * 範囲[1,1000]
+     */
+    public short TimestampDivision = 1;
+```
+
+日本の小規模ビジネスに最適化し、10桁～のIDの生成が可能となる（スループットが低下する）
+
+
+
+
 ## 运行环境
 
 JDK 1.8+

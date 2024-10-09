@@ -46,6 +46,11 @@ public class SnowWorkerM1 implements ISnowWorker {
      */
     protected final int TopOverCostCount;
 
+    /**
+     * timestampの割り算
+     */
+    protected final short TimestampDivision;
+
     protected final byte _TimestampShift;
     protected final static byte[] _SyncLock = new byte[0];
 
@@ -60,16 +65,19 @@ public class SnowWorkerM1 implements ISnowWorker {
     protected int _TermIndex = 0;
 
     public SnowWorkerM1(IdGeneratorOptions options) {
-        BaseTime = options.BaseTime != 0 ? options.BaseTime : 1582136402000L;
+        TimestampDivision = options.TimestampDivision;
+        BaseTime = options.BaseTime != 0 ? options.BaseTime / TimestampDivision : 1582136402000L / TimestampDivision;
         WorkerIdBitLength = options.WorkerIdBitLength == 0 ? 6 : options.WorkerIdBitLength;
         WorkerId = options.WorkerId;
         SeqBitLength = options.SeqBitLength == 0 ? 6 : options.SeqBitLength;
         MaxSeqNumber = options.MaxSeqNumber <= 0 ? (1 << SeqBitLength) - 1 : options.MaxSeqNumber;
         MinSeqNumber = options.MinSeqNumber;
-        // TopOverCostCount = options.TopOverCostCount == 0 ? 2000 : options.TopOverCostCount;
+        // TopOverCostCount = options.TopOverCostCount == 0 ? 2000 :
+        // options.TopOverCostCount;
         TopOverCostCount = options.TopOverCostCount;
         _TimestampShift = (byte) (WorkerIdBitLength + SeqBitLength);
         _CurrentSeqNumber = MinSeqNumber;
+
     }
 
     private void DoGenIdAction(OverCostActionArg arg) {
@@ -82,7 +90,7 @@ public class SnowWorkerM1 implements ISnowWorker {
 
     private void EndOverCostAction(long useTimeTick) {
         // if (_TermIndex > 10000) {
-        //     _TermIndex = 0;
+        // _TermIndex = 0;
         // }
     }
 
@@ -147,7 +155,7 @@ public class SnowWorkerM1 implements ISnowWorker {
                 if (_TurnBackIndex > 4) {
                     _TurnBackIndex = 1;
                 }
-                //BeginTurnBackAction(_TurnBackTimeTick);
+                // BeginTurnBackAction(_TurnBackTimeTick);
             }
 
             // try {
@@ -206,7 +214,7 @@ public class SnowWorkerM1 implements ISnowWorker {
     }
 
     protected long GetCurrentTimeTick() {
-        long millis = System.currentTimeMillis();
+        long millis = System.currentTimeMillis() / TimestampDivision;
         return millis - BaseTime;
     }
 

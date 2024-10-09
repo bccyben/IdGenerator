@@ -1,3 +1,6 @@
+# bacyben fork
+javaバージョンに変更あり、IdGenerator\Java\README.mdを参照してください
+
 # 雪花算法中非常好用的数字ID生成器
 
 ## 💎 最佳实践（置顶）

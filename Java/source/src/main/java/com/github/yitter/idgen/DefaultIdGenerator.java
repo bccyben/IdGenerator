@@ -67,6 +67,11 @@ public class DefaultIdGenerator implements IIdGenerator {
             throw new IdGeneratorException("TopOverCostCount error. (range:[0, 10000]");
         }
 
+        // 8.TimeStampDivision
+        if (options.TimestampDivision < 0 || options.TimestampDivision > 1000) {
+            throw new IdGeneratorException("TimeStampDivision error. (range:[0, 1000]");
+        }
+
         switch (options.Method) {
             case 2:
                 _SnowWorker = new SnowWorkerM2(options);

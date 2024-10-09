@@ -58,6 +58,13 @@ public class IdGeneratorOptions {
      */
     public short TopOverCostCount = 2000;
 
+    /**
+     * IDはより短く生成することが可能ただしシステムスループットが低下する
+     * 1000で設定する場合0.1sとなる
+     * 範囲[1,1000]
+     */
+    public short TimestampDivision = 1;
+
     public IdGeneratorOptions() {
 
     }

@@ -26,7 +26,6 @@ public class SnowWorkerM2 extends SnowWorkerM1 {
             } else {
                 _CurrentSeqNumber = MinSeqNumber;
             }
-
             if (currentTimeTick < _LastTimeTick) {
                 throw new IdGeneratorException("Time error for {0} milliseconds", _LastTimeTick - currentTimeTick);
             }
